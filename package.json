@@ -1,0 +1,18 @@
+﻿{
+  "name": "robindown",
+  "version": "1.0.0",
+  "description": "YouTube downloader web app powered by yt-dlp",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [
+    "yt-dlp",
+    "youtube",
+    "downloader"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}

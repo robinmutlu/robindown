@@ -1,0 +1,20 @@
+services:
+  robindown:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: robindown
+    restart: unless-stopped
+    ports:
+      - "4455:4455"
+    environment:
+      PORT: 4455
+      ALLOW_ANY_URL: "0"
+      MAX_ACTIVE_JOBS: 3
+      API_RATE_LIMIT_WINDOW_MS: 60000
+      API_RATE_LIMIT_MAX: 45
+    volumes:
+      - robindown_downloads:/app/downloads
+
+volumes:
+  robindown_downloads:

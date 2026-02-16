@@ -1,0 +1,11 @@
+node_modules
+downloads
+.git
+.gitignore
+.dockerignore
+ffmpeg.exe
+yt-dlp.exe
+*.log
+*.zip
+README.md
+docker-compose.yml

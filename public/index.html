@@ -1,0 +1,199 @@
+﻿<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RobinDown</title>
+    <meta name="theme-color" content="#050505" />
+    <meta name="description" content="RobinDown: clean EN/TR yt-dlp downloader UI with live progress." />
+    <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon/favicon-16x16.png" />
+    <link rel="icon" href="/img/favicon/favicon.ico" />
+    <link rel="manifest" href="/img/favicon/site.webmanifest" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/img/favicon/android-chrome-192x192.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="/img/favicon/android-chrome-512x512.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Syne:wght@500;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="grain"></div>
+
+    <header class="site-header">
+      <div class="site-header-inner">
+        <a href="#home" class="brand">
+          <img src="/img/logo.png" alt="RobinDown logo" class="brand-logo" />
+          <span>RobinDown</span>
+        </a>
+
+        <nav class="site-nav">
+          <a href="#downloader" data-i18n="nav_downloader">Downloader</a>
+          <a href="#features" data-i18n="nav_features">Features</a>
+          <a href="#faq" data-i18n="nav_faq">FAQ</a>
+        </nav>
+
+        <div class="lang-switch" role="group" aria-label="Language switch">
+          <button id="langEnBtn" class="lang-btn" type="button">EN</button>
+          <button id="langTrBtn" class="lang-btn" type="button">TR</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section id="home" class="hero">
+        <p class="tag" data-i18n="hero_tag">yt-dlp powered</p>
+        <h1 data-i18n="hero_title">Fast YouTube Downloads, Cleaner Workflow</h1>
+        <p class="subtitle" data-i18n="hero_subtitle">
+          Paste link, preview thumbnail and metadata, choose exact quality, then track live server download and conversion.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-ghost" href="#downloader" data-i18n="hero_action_start">Start Downloading</a>
+          <a class="btn btn-light" href="#features" data-i18n="hero_action_features">View Features</a>
+        </div>
+      </section>
+
+      <section id="downloader" class="workspace">
+        <div class="section-head">
+          <h2 data-i18n="downloader_title">Downloader Workspace</h2>
+          <p data-i18n="downloader_subtitle">Everything below is live and connected to your server-side yt-dlp engine.</p>
+        </div>
+
+        <section class="panel">
+          <label for="urlInput" data-i18n="label_video_url">Video URL</label>
+          <div class="row">
+            <input
+              id="urlInput"
+              type="url"
+              data-i18n-placeholder="placeholder_url"
+              placeholder="https://www.youtube.com/watch?v=..."
+              autocomplete="off"
+            />
+            <button id="fetchBtn" class="btn" data-i18n="btn_preview">Preview</button>
+          </div>
+          <p id="globalMessage" class="message"></p>
+        </section>
+
+        <section id="metaPanel" class="panel hidden">
+          <div class="meta-grid">
+            <div class="thumb-wrap">
+              <img id="thumb" alt="thumbnail" />
+            </div>
+            <div class="meta-info">
+              <h3 id="title"></h3>
+              <p id="uploader"></p>
+              <p id="duration"></p>
+            </div>
+          </div>
+        </section>
+
+        <section id="optionsPanel" class="panel hidden">
+          <div class="controls">
+            <div>
+              <label for="modeSelect" data-i18n="label_type">Type</label>
+              <select id="modeSelect">
+                <option value="video" data-i18n="mode_video">Video</option>
+                <option value="audio" data-i18n="mode_audio">Audio</option>
+              </select>
+            </div>
+
+            <div>
+              <label for="formatSelect" data-i18n="label_output_format">Output format</label>
+              <select id="formatSelect"></select>
+            </div>
+
+            <div>
+              <label for="qualitySelect" data-i18n="label_quality">Quality</label>
+              <select id="qualitySelect"></select>
+            </div>
+
+            <div id="formatIdWrap">
+              <label for="formatIdSelect" data-i18n="label_source_format">Specific source format (optional/custom)</label>
+              <select id="formatIdSelect"></select>
+            </div>
+          </div>
+
+          <button id="downloadBtn" class="btn btn-primary" data-i18n="btn_download">Download</button>
+        </section>
+
+        <section id="availabilityPanel" class="panel hidden">
+          <h3 data-i18n="available_qualities">Available Qualities</h3>
+          <div class="availability-grid">
+            <div>
+              <p class="availability-title" data-i18n="mode_video">Video</p>
+              <ul id="videoQualityList" class="quality-list"></ul>
+            </div>
+            <div>
+              <p class="availability-title" data-i18n="mode_audio">Audio</p>
+              <ul id="audioQualityList" class="quality-list"></ul>
+            </div>
+          </div>
+        </section>
+
+        <section id="statusPanel" class="panel hidden">
+          <h3 data-i18n="status_title">Status</h3>
+          <p id="statusText"></p>
+          <div class="progress-shell">
+            <div id="progressBar" class="progress-bar"></div>
+          </div>
+          <p id="fileMeta" class="message"></p>
+          <a id="downloadLink" class="btn hidden" href="#" data-i18n="btn_download_file">Download File</a>
+          <div id="logBox" class="log"></div>
+        </section>
+      </section>
+
+      <section id="features" class="panel section-panel">
+        <div class="section-head">
+          <h2 data-i18n="features_title">What You Get</h2>
+          <p data-i18n="features_subtitle">Built for clear control, transparent progress, and clean server lifecycle.</p>
+        </div>
+
+        <div class="feature-grid">
+          <article class="feature-card">
+            <h3 data-i18n="feature_1_title">Exact format control</h3>
+            <p data-i18n="feature_1_text">Choose video/audio output format and exact available source qualities from yt-dlp metadata.</p>
+          </article>
+          <article class="feature-card">
+            <h3 data-i18n="feature_2_title">Live status updates</h3>
+            <p data-i18n="feature_2_text">Track server states in real-time: queued, downloading, converting, done, or error.</p>
+          </article>
+          <article class="feature-card">
+            <h3 data-i18n="feature_3_title">Auto file cleanup</h3>
+            <p data-i18n="feature_3_text">Files in the server downloads folder are removed automatically after 6 hours.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="faq" class="panel section-panel">
+        <div class="section-head">
+          <h2 data-i18n="faq_title">FAQ</h2>
+        </div>
+        <div class="faq-grid">
+          <article>
+            <h3 data-i18n="faq_q1">Where are files stored?</h3>
+            <p data-i18n="faq_a1">All output files are written to the server downloads directory first.</p>
+          </article>
+          <article>
+            <h3 data-i18n="faq_q2">Do I need PATH setup?</h3>
+            <p data-i18n="faq_a2">No, local yt-dlp.exe and ffmpeg.exe in project root are supported directly on Windows.</p>
+          </article>
+          <article>
+            <h3 data-i18n="faq_q3">Is it mobile friendly?</h3>
+            <p data-i18n="faq_a3">Yes, layout and controls are responsive and optimized for smaller screens.</p>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p class="signature">
+        <span>RobinDown</span>
+        <span>&copy; <span id="currentYear"></span></span>
+        <a href="https://rob1n.dev" target="_blank" rel="noopener noreferrer">Robin Mutlu</a>
+      </p>
+    </footer>
+
+    <script src="app.js"></script>
+  </body>
+</html>
