@@ -1,5 +1,7 @@
 ﻿# RobinDown
 
+![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)
+
 ```text
  ____       _     _       ____                      
 |  _ \ ___ | |__ (_)_ __ |  _ \  _____      ___ __ 
@@ -157,6 +159,10 @@ docker compose down
 
 ## :warning: Legal / Usage
 Use RobinDown only for content you have rights to access/download and in accordance with platform terms and local laws.
+
+## :page_facing_up: License
+This project is licensed under the MIT License.  
+See `LICENSE` for details.
 
 ## :bust_in_silhouette: Author
 Robin Mutlu  
